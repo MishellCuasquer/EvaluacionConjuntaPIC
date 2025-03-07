@@ -1,0 +1,174 @@
+USE [master]
+GO
+/** Object:  Database [DonacionesAlimentos1]    Script Date: 06/03/2025 16:55:32 **/
+CREATE DATABASE [DonacionesAlimentos1]
+GO
+USE [DonacionesAlimentos1]
+
+GO
+CREATE TABLE [dbo].[Beneficiarios](
+	[BeneficiarioID] [int] IDENTITY(1,1) NOT NULL,
+	[UsuarioID] [int] NULL,
+	[Tipo] [nvarchar](50) NULL,
+	[Ubicacion] [nvarchar](200) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[BeneficiarioID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/** Object:  Table [dbo].[DonacionBeneficiario]    Script Date: 06/03/2025 16:55:32 **/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[DonacionBeneficiario](
+	[DonacionID] [int] NOT NULL,
+	[BeneficiarioID] [int] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[DonacionID] ASC,
+	[BeneficiarioID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/** Object:  Table [dbo].[Donaciones]    Script Date: 06/03/2025 16:55:32 **/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Donaciones](
+	[DonacionID] [int] IDENTITY(1,1) NOT NULL,
+	[DonanteID] [int] NULL,
+	[TipoAlimento] [nvarchar](100) NULL,
+	[Cantidad] [int] NULL,
+	[FechaDisponibilidad] [date] NULL,
+	[CondicionesEspeciales] [nvarchar](200) NULL,
+	[Estado] [nvarchar](50) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[DonacionID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/** Object:  Table [dbo].[Donantes]    Script Date: 06/03/2025 16:55:32 **/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Donantes](
+	[DonanteID] [int] IDENTITY(1,1) NOT NULL,
+	[UsuarioID] [int] NULL,
+	[Tipo] [nvarchar](50) NULL,
+	[Ubicacion] [nvarchar](200) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[DonanteID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/** Object:  Table [dbo].[Usuarios]    Script Date: 06/03/2025 16:55:32 **/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Usuarios](
+	[UsuarioID] [int] IDENTITY(1,1) NOT NULL,
+	[Nombre] [nvarchar](100) NULL,
+	[Email] [nvarchar](100) NULL,
+	[Contraseña] [nvarchar](100) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[UsuarioID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET IDENTITY_INSERT [dbo].[Beneficiarios] ON 
+GO
+INSERT [dbo].[Beneficiarios] ([BeneficiarioID], [UsuarioID], [Tipo], [Ubicacion]) VALUES (1, 4, N'Comedor Comunitario', N'Barrio X, Ciudad A')
+GO
+INSERT [dbo].[Beneficiarios] ([BeneficiarioID], [UsuarioID], [Tipo], [Ubicacion]) VALUES (2, 5, N'Organización Social', N'Centro, Ciudad B')
+GO
+INSERT [dbo].[Beneficiarios] ([BeneficiarioID], [UsuarioID], [Tipo], [Ubicacion]) VALUES (3, 6, N'Comedor Comunitario', N'Zona Norte, Ciudad A')
+GO
+SET IDENTITY_INSERT [dbo].[Beneficiarios] OFF
+GO
+INSERT [dbo].[DonacionBeneficiario] ([DonacionID], [BeneficiarioID]) VALUES (1, 1)
+GO
+INSERT [dbo].[DonacionBeneficiario] ([DonacionID], [BeneficiarioID]) VALUES (1, 2)
+GO
+INSERT [dbo].[DonacionBeneficiario] ([DonacionID], [BeneficiarioID]) VALUES (2, 3)
+GO
+INSERT [dbo].[DonacionBeneficiario] ([DonacionID], [BeneficiarioID]) VALUES (3, 1)
+GO
+INSERT [dbo].[DonacionBeneficiario] ([DonacionID], [BeneficiarioID]) VALUES (4, 2)
+GO
+INSERT [dbo].[DonacionBeneficiario] ([DonacionID], [BeneficiarioID]) VALUES (5, 3)
+GO
+SET IDENTITY_INSERT [dbo].[Donaciones] ON 
+GO
+INSERT [dbo].[Donaciones] ([DonacionID], [DonanteID], [TipoAlimento], [Cantidad], [FechaDisponibilidad], [CondicionesEspeciales], [Estado]) VALUES (1, 1, N'Pan', 50, CAST(N'2025-03-07' AS Date), N'Consumir antes de 3 días', N'Disponible')
+GO
+INSERT [dbo].[Donaciones] ([DonacionID], [DonanteID], [TipoAlimento], [Cantidad], [FechaDisponibilidad], [CondicionesEspeciales], [Estado]) VALUES (2, 2, N'Arroz', 100, CAST(N'2025-03-08' AS Date), NULL, N'Disponible')
+GO
+INSERT [dbo].[Donaciones] ([DonacionID], [DonanteID], [TipoAlimento], [Cantidad], [FechaDisponibilidad], [CondicionesEspeciales], [Estado]) VALUES (3, 3, N'Leche', 30, CAST(N'2025-03-06' AS Date), N'Refrigerar', N'Pendiente')
+GO
+INSERT [dbo].[Donaciones] ([DonacionID], [DonanteID], [TipoAlimento], [Cantidad], [FechaDisponibilidad], [CondicionesEspeciales], [Estado]) VALUES (4, 1, N'Frutas', 20, CAST(N'2025-03-07' AS Date), N'Frescas', N'Disponible')
+GO
+INSERT [dbo].[Donaciones] ([DonacionID], [DonanteID], [TipoAlimento], [Cantidad], [FechaDisponibilidad], [CondicionesEspeciales], [Estado]) VALUES (5, 2, N'Verduras', 15, CAST(N'2025-03-08' AS Date), NULL, N'Disponible')
+GO
+SET IDENTITY_INSERT [dbo].[Donaciones] OFF
+GO
+SET IDENTITY_INSERT [dbo].[Donantes] ON 
+GO
+INSERT [dbo].[Donantes] ([DonanteID], [UsuarioID], [Tipo], [Ubicacion]) VALUES (1, 1, N'Supermercado', N'Calle 123, Ciudad A')
+GO
+INSERT [dbo].[Donantes] ([DonanteID], [UsuarioID], [Tipo], [Ubicacion]) VALUES (2, 2, N'Restaurante', N'Avenida 45, Ciudad B')
+GO
+INSERT [dbo].[Donantes] ([DonanteID], [UsuarioID], [Tipo], [Ubicacion]) VALUES (3, 3, N'Particular', N'Calle 78, Ciudad A')
+GO
+SET IDENTITY_INSERT [dbo].[Donantes] OFF
+GO
+SET IDENTITY_INSERT [dbo].[Usuarios] ON 
+GO
+INSERT [dbo].[Usuarios] ([UsuarioID], [Nombre], [Email], [Contraseña]) VALUES (1, N'Supermercado Central', N'supermercado@mail.com', N'password123')
+GO
+INSERT [dbo].[Usuarios] ([UsuarioID], [Nombre], [Email], [Contraseña]) VALUES (2, N'Restaurante Sabores', N'restaurante@mail.com', N'password123')
+GO
+INSERT [dbo].[Usuarios] ([UsuarioID], [Nombre], [Email], [Contraseña]) VALUES (3, N'Juan Pérez', N'juan@mail.com', N'password123')
+GO
+INSERT [dbo].[Usuarios] ([UsuarioID], [Nombre], [Email], [Contraseña]) VALUES (4, N'Comedor Esperanza', N'comedor@mail.com', N'password123')
+GO
+INSERT [dbo].[Usuarios] ([UsuarioID], [Nombre], [Email], [Contraseña]) VALUES (5, N'ONG Ayuda', N'ong@mail.com', N'password123')
+GO
+INSERT [dbo].[Usuarios] ([UsuarioID], [Nombre], [Email], [Contraseña]) VALUES (6, N'Maria Gómez', N'maria@mail.com', N'password123')
+GO
+SET IDENTITY_INSERT [dbo].[Usuarios] OFF
+GO
+SET ANSI_PADDING ON
+GO
+/** Object:  Index [UQ_Usuarios_A9D1053422FC997E]    Script Date: 06/03/2025 16:55:32 **/
+ALTER TABLE [dbo].[Usuarios] ADD UNIQUE NONCLUSTERED 
+(
+	[Email] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[Beneficiarios]  WITH CHECK ADD FOREIGN KEY([UsuarioID])
+REFERENCES [dbo].[Usuarios] ([UsuarioID])
+GO
+ALTER TABLE [dbo].[DonacionBeneficiario]  WITH CHECK ADD FOREIGN KEY([BeneficiarioID])
+REFERENCES [dbo].[Beneficiarios] ([BeneficiarioID])
+GO
+ALTER TABLE [dbo].[DonacionBeneficiario]  WITH CHECK ADD FOREIGN KEY([DonacionID])
+REFERENCES [dbo].[Donaciones] ([DonacionID])
+GO
+ALTER TABLE [dbo].[Donaciones]  WITH CHECK ADD FOREIGN KEY([DonanteID])
+REFERENCES [dbo].[Donantes] ([DonanteID])
+GO
+ALTER TABLE [dbo].[Donantes]  WITH CHECK ADD FOREIGN KEY([UsuarioID])
+REFERENCES [dbo].[Usuarios] ([UsuarioID])
+GO
+USE [master]
+GO
+ALTER DATABASE [DonacionesAlimentos1] SET  READ_WRITE 
+GO
